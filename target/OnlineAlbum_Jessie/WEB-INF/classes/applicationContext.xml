@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
  http://www.springframework.org/schema/beans/spring-beans.xsd
- http://www.springframework.org/schema/tx
- http://www.springframework.org/schema/tx/spring-tx.xsd
- http://www.springframework.org/schema/aop
- http://www.springframework.org/schema/aop/spring-aop.xsd
+
+
+
+
  http://www.springframework.org/schema/context
  http://www.springframework.org/schema/context/spring-context.xsd">
     <!-- 配置 spring 创建容器时要扫描的包 -->
@@ -36,4 +34,28 @@
     <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.Jessie.OnlineAlbum.dao"/>
     </bean>
+    <!--配置ObjectMapper-->
+    <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper">
+        <!--我不知道这样空写有什么后果，但是运行正常-->
+    </bean>
+    <!--邮件配置相关-->
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.office365.com"/>
+        <property name="port" value="587"/>
+        <!-- 如果需要账号密码授权 -->
+        <property name="username" value="6543x1@outlook.com"/>
+        <property name="password" value="123456cnm"/>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <!--必须开启加密否则无法发送-->
+            </props>
+        </property>
+    </bean>
+    <!-- 可以做一个模板，把邮件的通用内容放到这里 -->
+    <bean id="templateMessage" class="org.springframework.mail.SimpleMailMessage">
+        <property name="from" value="6543x1@outlook.com"/>
+        <property name="subject" value="找回您的密码"/>
+    </bean>
+
 </beans>

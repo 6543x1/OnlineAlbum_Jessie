@@ -64,7 +64,7 @@
         alert("开始上传")
         var form = new FormData(document.getElementById("tf"));
         $.ajax({
-            url: "Image/upload",
+            url: "image/uploadByAlbum",
             type: "post",
             data: form,
             processData: false,
@@ -83,7 +83,7 @@
         alert("开始上传")
         var form = new FormData(document.getElementById("uploadById"));
         $.ajax({
-            url: "Image/uploadById",
+            url: "image/upload",
             type: "post",
             data: form,
             processData: false,
@@ -102,7 +102,7 @@
         alert("开始创建")
         var form = new FormData(document.getElementById("createFolder"));
         $.ajax({
-            url: "Image/CreateFolder",
+            url: "folder/CreateFolder",
             type: "post",
             data: form,
             processData: false,

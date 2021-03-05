@@ -19,8 +19,8 @@
     绝对路径：${folder.path }<br>
     FID：${folder.fid }<br>
     上一个目录fid：${folder.father }<br>
-    <a href="${pageContext.request.contextPath}/Image/getUserFolders?father=${folder.father}">原地tp</a>
-    <a href="${pageContext.request.contextPath}/Image/getUserFolders?father=${folder.fid}">进入下一个目录</a>
+    <a href="${pageContext.request.contextPath}/folder/getUserFolderInfo?father=${folder.father}">原地tp</a>
+    <a href="${pageContext.request.contextPath}/folder/getUserFolderInfo?father=${folder.fid}">进入下一个目录</a>
     <hr>
 </c:forEach>
 <c:forEach items="${ imageList }" var="image">
@@ -28,7 +28,7 @@
     绝对路径：${image.path }<br>
     所属文件夹的FID：${image.fid }<br>
     上传时间：${image.uploadTime }<br>
-    <a href="${pageContext.request.contextPath}/Image/download?id=${image.imageid}">下载这张图片</a>
+    <a href="${pageContext.request.contextPath}/image/download?imageid=${image.imageid}">下载这张图片</a>
     <button id="downloadImage" value="下载" onclick="downloadImage(${image.imageid})">下载（这个用不了）</button>
     <hr>
 </c:forEach>
@@ -36,7 +36,7 @@
 <script>
     function downloadImage(id) {
         $.ajax({
-            url: "${pageContext.request.contextPath}/Image/download",
+            url: "${pageContext.request.contextPath}/image/download",
             type: "post",
             data: id,
             processData: false,

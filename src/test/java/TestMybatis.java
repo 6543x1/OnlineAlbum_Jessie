@@ -1,6 +1,5 @@
 import com.Jessie.OnlineAlbum.dao.UserDAO;
-import com.Jessie.OnlineAlbum.entity.USER;
-import com.Jessie.OnlineAlbum.service.ImageService;
+import com.Jessie.OnlineAlbum.entity.User;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -22,8 +21,8 @@ public class TestMybatis
         SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(in);
         SqlSession session = factory.openSession();
         UserDAO ad = session.getMapper(UserDAO.class);
-        List<USER> list = ad.findAll();
-        for (USER x : list)
+        List<User> list = ad.findAll();
+        for (User x : list)
         {
             System.out.println(x);
             //哇塞居然真的只要写个interface就好了？？？？
@@ -33,11 +32,10 @@ public class TestMybatis
         session.close();
         in.close();
     }
-
     @Test
     public void run3() throws IOException
     {
-        USER newUser = new USER();
+        User newUser = new User();
         newUser.setUsername("Lin");
         newUser.setPassword("123456");
         InputStream in = Resources.getResourceAsStream("SqlMapConfig.xml");

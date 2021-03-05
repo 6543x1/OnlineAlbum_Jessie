@@ -5,13 +5,13 @@ import java.time.LocalDateTime;
 
 public class Image implements Serializable
 {
-    private int imageid;//只用于读取数据库时使用
+    private int imageid;//图片的唯一id，具有唯一性
     private String name; // 图片名称
     private String username; // 创建人
-    private int visited; // 访问级别，还没想好，但是肯定不止两种
-    private String album; // 所属的相册
-    private String path;// 图片文件的具体路径
-    private LocalDateTime UploadTime;//图片上传的时间
+    private int visited; // 访问级别，还没想好，自己可见级别是1
+    private String album; // 所属的相册，就是所属文件夹名称
+    private String path;// 图片文件的具体路径（指服务器路径）
+    private LocalDateTime uploadTime;//图片上传的时间
     private long size;//图片大小
     private int fid;//所属于的文件夹的id
 
@@ -34,7 +34,7 @@ public class Image implements Serializable
                 ", visited=" + visited +
                 ", album='" + album + '\'' +
                 ", path='" + path + '\'' +
-                ", UploadTime=" + UploadTime +
+                ", UploadTime=" + uploadTime +
                 ", size=" + size +
                 '}';
     }
@@ -76,12 +76,12 @@ public class Image implements Serializable
 
     public LocalDateTime getUploadTime()
     {
-        return UploadTime;
+        return uploadTime;
     }
 
     public void setUploadTime(LocalDateTime uploadTime)
     {
-        UploadTime = uploadTime;
+        this.uploadTime = uploadTime;
     }
 
     public String getName()

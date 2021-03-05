@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 public class Folder implements Serializable
 {
-    private int fid;
+    private int fid;//文件夹的id,具有唯一性
     private String folderName;
     private String path;
-    private int father;
-    private String username;
+    private int father;//父文件夹的fid
+    private String username;//所属用户
     private int size;
 
     @Override

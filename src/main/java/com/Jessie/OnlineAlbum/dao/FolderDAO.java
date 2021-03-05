@@ -11,7 +11,6 @@ public interface FolderDAO
 {
     @Insert("insert into folder (folderName,path,father,username,size) values(#{folderName},#{path},#{father},#{username},#{size})")
     public void newFolder(Folder folder);
-
     @Select("select * from folder where fid=#{fid}")
     public Folder getFolder(int fid);
 

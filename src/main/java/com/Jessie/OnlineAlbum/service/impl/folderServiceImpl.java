@@ -6,14 +6,16 @@ import com.Jessie.OnlineAlbum.service.FolderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Objects;
 
 @Service("folderService")
 public class folderServiceImpl implements FolderService
 {
     @Autowired
     private FolderDAO folderDAO;
-
     @Override
     public void newFolder(Folder folder)
     {
@@ -48,5 +50,41 @@ public class folderServiceImpl implements FolderService
     public void delFolder(int fid)
     {
         folderDAO.delFolder(fid);
+    }
+
+    public static boolean deleteFolder(String path) throws Exception
+    {
+        try
+        {
+
+            File file = new File(path);
+            // 当且仅当此抽象路径名表示的文件存在且 是一个目录时，返回 true
+            if (!file.isDirectory())
+            {
+                file.delete();
+            } else if (file.isDirectory())
+            {
+                String[] fileList = file.list();
+                for (int i = 0; i < Objects.requireNonNull(fileList).length; i++)
+                {
+                    File delfile = new File(path + fileList[i]);
+                    if (!delfile.isDirectory())
+                    {
+                        delfile.delete();
+                        System.out
+                                .println(delfile.getAbsolutePath() + "删除文件成功");
+                    } else if (delfile.isDirectory())
+                    {
+                        deleteFolder(path + fileList[i] + "/");
+                    }
+                }
+                System.out.println(file.getAbsolutePath() + "删除成功");
+                file.delete();
+            }
+        } catch (FileNotFoundException e)
+        {
+            System.out.println("deletefile() Exception:" + e.getMessage());
+        }
+        return true;
     }
 }

@@ -38,7 +38,7 @@
                 alert("已执行");
             });
         });
-        
+
     </script>
 </head>
 <body>
@@ -60,12 +60,12 @@
     <a href="user/getSessionAttribute">检查Session的状态(检查登录)</a>
     <br/>
     <button id="delSession">恢复session到初始状态(退出登录)</button>
-        <br/>
-    <a href="Image/download?id=4">下载示例图片</a>
     <br/>
-    <a href="Image/getUserFolders?father=${userfid}">查看当前用户的文件目录</a>
+    <a href="image/download?id=4">下载示例图片</a>
+    <br/>
+    <a href="image/getUserFolders?father=${userfid}">查看当前用户的文件目录</a>
     <br/>
     <h3>下面会显示一张图片（好像生成缩略图挺麻烦只能弄原图）</h3>
-    <img src="Image/showImage?id=3" width="400px" height="300px">
+    <img src="image/showImage?id=3" width="400px" height="300px">
 </body>
 </html>

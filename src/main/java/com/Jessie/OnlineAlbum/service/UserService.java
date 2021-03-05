@@ -1,7 +1,7 @@
 package com.Jessie.OnlineAlbum.service;
 
 
-import com.Jessie.OnlineAlbum.entity.USER;
+import com.Jessie.OnlineAlbum.entity.User;
 
 import java.util.List;
 
@@ -12,16 +12,20 @@ public interface UserService
      *
      * @param user
      */
-    void saveUser(USER user);
+    void saveUser(User user);
 
-    void updateUserFid(USER user);
+    void updateUserFid(User user);
 
     /**
      * 查询所有账户
      *
      * @return
      */
-    List<USER> findAllAccount();
+    List<User> findAllAccount();
 
-    USER findUser(String name);
+    User findUser(String name);
+
+    void setMailAddr(String username, String mailAddr);
+
+    void editPassword(String username, String password);
 }
