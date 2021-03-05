@@ -45,7 +45,7 @@
         <property name="port" value="587"/>
         <!-- 如果需要账号密码授权 -->
         <property name="username" value="6543x1@outlook.com"/>
-        <property name="password" value="123456cnm"/>
+        <property name="password" value="***"/>
         <property name="javaMailProperties">
             <props>
                 <prop key="mail.smtp.starttls.enable">true</prop>
