@@ -34,7 +34,11 @@
             <mvc:exclude-mapping path="/user/tologin"/>
             <mvc:exclude-mapping path="/test/**"/>
             <!--配置拦截器对象-->
-            <bean class="com.Jessie.OnlineAlbum.service.loginInterceptor"/>
+            <bean class="com.Jessie.OnlineAlbum.interceptor.loginInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/admin/**"/>
+            <bean class="com.Jessie.OnlineAlbum.interceptor.adminInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
     <!--配置文件解析器对象-->

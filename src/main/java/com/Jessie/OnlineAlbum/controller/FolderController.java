@@ -45,7 +45,7 @@ public class FolderController
         }
     }
 
-    @RequestMapping("/getUserFolderInfo")
+    @RequestMapping(value = "/getUserFolderInfo", produces = "text/html;charset=UTF-8")
     public String getUserFolders(int father, ModelMap modelMap, Model model)
     {
         String username = (String) modelMap.get("username");
@@ -80,13 +80,27 @@ public class FolderController
         return "DownloadPages";
     }
 
-    @RequestMapping("/getCurrentFolders")
+    @RequestMapping(value = "/getCurrentFolders", produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String getCurrentFolders(int fid, ModelMap modelMap) throws Exception
     {
         String username = (String) modelMap.get("username");
         List<Folder> folderList = folderService.getUserFolders(fid, username);
         System.out.println("获取文件夹数据中" + username + " " + fid);
+        Folder fatherFolder;//返回上个文件夹
+        if (fid != 0)
+        {//禁止返回根目录上一级，虽然这样也没有权限就是了，但是我根目录路径可没改
+            fatherFolder = folderService.getFolder(fid);
+            fatherFolder.setFolderName("返回上一级");
+        } else
+        {
+            fatherFolder = new Folder();
+            fatherFolder.setFid(0);
+            fatherFolder.setFather(0);//根目录原地tp
+            fatherFolder.setPath("*root*");//隐藏服务端细节（你图片不都给你泄漏完了吗）
+            fatherFolder.setFolderName("返回上一级");
+        }
+        folderList.add(0, fatherFolder);
         try
         {
             for (Folder folder : folderList)
@@ -102,24 +116,11 @@ public class FolderController
             folder.setFolderName("NULL");
             folderList.add(folder);
         }
-        Folder fatherFolder;//返回上个文件夹
-        if (fid != 0)
-        {//禁止返回根目录上一级，虽然这样也没有权限就是了，但是我根目录路径可没改
-            fatherFolder = folderService.getFolder(fid);
-            fatherFolder.setFid(-3);
-        } else
-        {
-            fatherFolder = new Folder();
-            fatherFolder.setFid(-3);
-            fatherFolder.setFather(0);//根目录原地tp
-            fatherFolder.setPath("*root*");//隐藏服务端细节（你图片不都给你泄漏完了吗）
-            fatherFolder.setFolderName(">////<");
-        }
-        folderList.add(fatherFolder);
+
         return objectMapper.writeValueAsString(folderList);
     }
 
-    @RequestMapping("/getCurrentImages")
+    @RequestMapping(value = "/getCurrentImages", produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String getCurrentImages(int fid, ModelMap modelMap) throws Exception
     {
@@ -139,12 +140,11 @@ public class FolderController
             Image image = new Image();
             image.setFid(-2);
             image.setName("NULL");
-
         }
         return objectMapper.writeValueAsString(imageList);
     }
 
-    @RequestMapping("/CreateFolder")
+    @RequestMapping(value = "/CreateFolder", produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String CreateFolder(int father, String foldName, ModelMap modelMap) throws Exception
     {
@@ -172,7 +172,7 @@ public class FolderController
         return objectMapper.writeValueAsString(Result.success("创建文件夹成功"));
     }
 
-    @RequestMapping("/deleteFolder")
+    @RequestMapping(value = "/deleteFolder", produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String deleteFolder(int fid, ModelMap modelMap) throws Exception
     {

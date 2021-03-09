@@ -22,8 +22,10 @@
     <!--配置连接池-->
     <bean id="comboPooledDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
-        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/onlinealbum1?useSSL=false&amp;characterEncoding=utf8"/>
+        <property name="jdbcUrl"
+                  value="jdbc:mysql://localhost:3306/onlinealbum1?useSSL=false&amp;characterEncoding=utf8"/>
         <property name="user" value="root"/>
+<!--    懒得弄个新号了，直接ROOT吧    -->
         <property name="password" value="123456cnm"/>
     </bean>
     <!--  配置sqlSessionFactory工厂-->
@@ -58,4 +60,14 @@
         <property name="subject" value="找回您的密码"/>
     </bean>
 
+    <bean id="imageType" class="java.util.HashMap">
+        <constructor-arg>
+        <map>
+         <entry key="jpg" value="true"/>
+         <entry key="png" value="true"/>
+         <entry key="gif" value="true"/>
+        <entry key="bmp" value="true"/>
+         </map>
+        </constructor-arg>
+       </bean>
 </beans>

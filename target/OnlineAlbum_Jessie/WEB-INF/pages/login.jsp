@@ -17,7 +17,7 @@
             <td>用户名：<input type="text" name="username"></td>
         </tr>
         <tr>
-            <td>密码：<input type="password"  name="password"></td>
+            <td>密码：<input type="password" name="password"></td>
         </tr>
         <!--这里的name一定要和controller中对应方法参数名一样，否则会NullPointerException -->
         <tr>
@@ -33,7 +33,7 @@
             <td>请输入用户名：<input type="text" name="username"></td>
         </tr>
         <tr>
-            <td>请输入密码：<input type="password"  name="password"></td>
+            <td>请输入密码：<input type="password" name="password"></td>
         </tr>
         <!--这里的name一定要和controller中对应方法参数名一样，否则会NullPointerException -->
         <tr>
@@ -59,7 +59,9 @@
                     alert(data)
                 }
             }
-        });}
+        });
+    }
+
     function register() {
         var user = new FormData(document.getElementById("register"));
         $.ajax({
@@ -76,8 +78,10 @@
                     alert(data)
                 }
             }
-        });}
-    function next(){
+        });
+    }
+
+    function next() {
 
         window.location = "${pageContext.request.contextPath}/index.jsp";
 

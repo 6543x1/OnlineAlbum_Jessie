@@ -13,14 +13,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.io.IOException;
 
 @Controller
 @RequestMapping("/user")
@@ -37,7 +39,7 @@ public class UserController
     @Autowired
     private MailService mailService;
 
-    @RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST}, produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String login(User user, Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception
     {
@@ -74,7 +76,7 @@ public class UserController
         return objectMapper.writeValueAsString(result);
     }
 
-    @RequestMapping("/Register")
+    @RequestMapping(value = "/Register", produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String register(User user) throws Exception
     {
@@ -116,20 +118,49 @@ public class UserController
         return objectMapper.writeValueAsString(Result.success("RegisterSuccess"));
     }
 
-    @RequestMapping("/setMailAddr")
+    @RequestMapping(value = "/ResetPw", produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String ResetPw(ModelMap modelMap, Model model, String password, String newPassword) throws Exception
+    {
+        Result res = Result.success("成功");
+        String username = (String) modelMap.get("username");
+        if (username == null) return objectMapper.writeValueAsString("EMPTY USERNAME");
+        User user;
+        try
+        {
+            user = userService.findUser("username");
+            if (user.getPassword().equals(DigestUtils.md5DigestAsHex(password.getBytes())))
+            {
+                userService.editPassword(username, DigestUtils.md5DigestAsHex(newPassword.getBytes()));
+            } else
+            {
+                res = Result.error("原密码不对", 403);
+            }
+        } catch (NullPointerException e)
+        {
+            res = Result.error("服务器内部错误", 500);
+        }
+        return objectMapper.writeValueAsString(res);
+    }
+
+    @RequestMapping(value = "/setMailAddr", produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String setMailAddress(String mailAddr, ModelMap modelMap, Model model) throws Exception
     {
         String username = (String) modelMap.get("username");
-        if (username == null) return objectMapper.writeValueAsString("EMPTY USERNAME");
-        if (mailAddr == null) return objectMapper.writeValueAsString("EMPTY ADDRESS");
+        if (username == null) return objectMapper.writeValueAsString(Result.error("找不到用户名(服务器出错联系管理员)"));
+        if (mailAddr == null) return objectMapper.writeValueAsString(Result.error("邮箱是空的"));
+        if (userService.findUser(username).getMailAddress() != null)
+        {
+            return objectMapper.writeValueAsString(Result.error("已经设置邮箱了，如果失效请联系管理员更改"));
+        }
         model.addAttribute("resetCode", mailServiceImpl.getRandomString());
         model.addAttribute("mailAddr", mailAddr);
         mailService.sendResetPw(mailAddr, username + "的请求码(六位字符）:" + modelMap.get("resetCode"));
-        return objectMapper.writeValueAsString(Result.success("setSuccessPlzConfirm"));
+        return objectMapper.writeValueAsString(Result.success("SuccessPlzConfirm"));
     }
 
-    @RequestMapping("/confirmAddr")
+    @RequestMapping(value = "/confirmAddr", produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String confirmAddr(ModelMap modelMap, Model model, String mailCode, String newPassword) throws Exception
     {
@@ -139,7 +170,7 @@ public class UserController
         String trueCode = (String) modelMap.get("resetCode");
         if (trueCode.equals(mailCode))
         {
-            if (!newPassword.equals("0"))
+            if (!newPassword.equals("0") && !userService.findUser(username).getMailAddress().equals("null"))
                 userService.editPassword(username, DigestUtils.md5DigestAsHex(newPassword.getBytes()));
             else
                 userService.setMailAddr(username, (String) modelMap.get("mailAddr"));
@@ -147,52 +178,30 @@ public class UserController
             model.addAttribute("resetCode", "");
         } else
         {
-            res = Result.error("Incorrect code", 500);
+            res = Result.error("Incorrect code", 400);
         }
         return objectMapper.writeValueAsString(res);
     }
 
-    @RequestMapping("/tologin")
-    public String toLogin()
+    @RequestMapping(value = "/resetPwByMail", produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String ResetPwByMail(ModelMap modelMap, Model model) throws Exception
     {
-        System.out.println("正在跳转到登入页");
-        return "login";
-    }
-
-    @RequestMapping("/testRedirect")
-    public void Redirect(HttpServletRequest request, HttpServletResponse response)
-    {
+        String username = (String) modelMap.get("username");
+        if (username == null) return objectMapper.writeValueAsString(Result.error("找不到用户名(服务器出错联系管理员)"));
+        String mailAddr;
         try
         {
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
-            //成功重定向到本页！地址栏内容已经改变，但是好像只有index中能用。。。
-        } catch (IOException e)
+            mailAddr = userService.findUser(username).getMailAddress();
+        } catch (NullPointerException e)
         {
             e.printStackTrace();
+            return objectMapper.writeValueAsString(Result.error("没有设置邮箱", 404));
         }
+        model.addAttribute("resetCode", mailServiceImpl.getRandomString());
+        mailService.sendResetPw(mailAddr, username + "的请求码(六位字符）:" + modelMap.get("resetCode"));
+        return objectMapper.writeValueAsString(Result.success("SuccessPlzConfirm"));
     }
-
-    @RequestMapping("/ToUpload")
-    public void RedirectToUpload(HttpServletRequest request, HttpServletResponse response)
-    {
-        try
-        {
-            response.sendRedirect(request.getContextPath() + "/FileUpload.jsp");
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    //模拟异步请求响应
-    @RequestMapping("/testJson")
-    public void testAjax(@RequestBody String body)
-    {
-        System.out.println("执行ajax请求");
-        System.out.println(body);
-        //  这样可以成功取得Json的内容
-    }
-
     @RequestMapping("/isLogin")
     @ResponseBody
     public String isLogin(ModelMap modelMap) throws Exception
@@ -202,6 +211,7 @@ public class UserController
     }
 
     @RequestMapping("/getSessionAttribute")
+    @ResponseBody
     public String getSessionAttribute(ModelMap modelmap)
     {
         String msg = (String) modelmap.get("username");
@@ -209,10 +219,11 @@ public class UserController
         return "success";
     }
 
-    @RequestMapping("/delSessionAttribute")
-    public void delSessionAttribute(SessionStatus status)
+    @RequestMapping("/loginOut")
+    @ResponseBody
+    public String delSessionAttribute(SessionStatus status) throws Exception
     {
-        System.out.println("恢复Session");
-        status.setComplete();//将session恢复
+        status.setComplete();//将session重置
+        return objectMapper.writeValueAsString(Result.success("loginOutSuccess"));
     }
 }

@@ -11,6 +11,6 @@
     <title>错误</title>
 </head>
 <body>
-    <h3>这是一个错误页面</h3>
+<h3>这是一个错误页面</h3>
 </body>
 </html>

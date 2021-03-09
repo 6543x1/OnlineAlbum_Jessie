@@ -12,9 +12,9 @@
     <title>LIST</title>
 </head>
 <body>
-    <h3>查询所有帐号</h3>
-    <c:forEach items="${list}" var="USER">
-        ${USER.username}
-    </c:forEach>
+<h3>查询所有帐号</h3>
+<c:forEach items="${list}" var="USER">
+    ${USER.username}
+</c:forEach>
 </body>
 </html>

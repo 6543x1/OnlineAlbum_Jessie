@@ -11,10 +11,7 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
@@ -22,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/image")
@@ -36,96 +32,7 @@ public class ImageController
     @Autowired
     private FolderService folderService;
 
-    @RequestMapping("/fileupload1")
-    public String fileupload1(HttpServletRequest request, MultipartFile upload, ModelMap modelmap) throws Exception
-    {
-        if (modelmap.get("username") == null)
-        {
-            System.out.println("还没有登录");
-            return "error";
-        }
-        System.out.println("SpringMVC文件上传开始...");
-        //String path = request.getSession().getServletContext().getRealPath("/uploads/");
-        String path2 = "D:/TomcatImg/";
-        //选的是war exploded 那么文件会在工程目录下
-        //否则在tomcat目录下
-        File file = new File(path2);
-        if (!file.exists())
-        {
-            file.mkdirs();
-        }
-        String filename = upload.getOriginalFilename();
-        String uuid = UUID.randomUUID().toString().replace("-", "");
-        filename = uuid + "_" + filename;
-        upload.transferTo(new File(path2, filename));
-        return "FileSuccess";
-    }
-
-    @RequestMapping("/uploadByAlbum")
-    @ResponseBody
-    //添加ResponseBody返回值会直接接受到字符串
-    public String FileUpload(HttpServletRequest request, @RequestParam("album") String album, @RequestParam("upload") MultipartFile upload, ModelMap modelmap) throws Exception
-    {
-        if (modelmap.get("username") == null)
-        {
-            System.out.println("还没有登录");
-            return "请先登入";
-        }
-        System.out.println("SpringMVC文件上传开始...");
-        //String path = request.getSession().getServletContext().getRealPath("/uploads/");
-        String username = (String) modelmap.get("username");
-        String path2 = "D:/TomcatImg/" + username + "/" + album + "/";
-        //存储结构也要大改，这一部分要加上user文件夹要不然会都重在一起不方便管理
-        //算了明天一起改吧
-        Folder thisFolder;
-        if (folderService.queryFolder(path2, username) == null)
-        {
-            thisFolder = new Folder();
-            thisFolder.setFather((int) modelmap.get("userfid"));
-            thisFolder.setFolderName(album);
-            thisFolder.setPath(path2);
-            thisFolder.setUsername((String) modelmap.get("username"));
-            thisFolder.setSize(0);
-            folderService.newFolder(thisFolder);
-        }
-        thisFolder = folderService.queryFolder(path2, username);
-        //选的是war exploded 那么文件会在工程目录下
-        //否则在tomcat目录下
-        System.out.println("文件夹查询成功");
-        File file = new File(path2);
-        if (!file.exists())
-        {
-            file.mkdirs();
-        }
-        try
-        {
-            String filename = upload.getOriginalFilename();
-            Image thisImage = new Image();
-            thisImage.setName(filename);
-            thisImage.setAlbum(album);
-            thisImage.setVisited(1);
-            thisImage.setUser((String) modelmap.get("username"));
-            thisImage.setPath(path2);
-            thisImage.setUploadTime(LocalDateTime.now());
-            thisImage.setSize(upload.getSize());
-            thisImage.setFid(thisFolder.getFid());
-            System.out.println(thisImage.toString());
-            imageService.saveImage(thisImage);
-            //String uuid = UUID.randomUUID().toString().replace("-", "");
-            //可能需要判断一下。。。？
-            upload.transferTo(new File(path2, filename));
-            System.out.println("文件保存成功，开始向数据库中更新文件夹数据");
-            folderService.updateSize(thisFolder.getSize() + thisImage.getSize(), thisFolder.getFid());
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-            return "error";
-        }
-        System.out.println("全部操作已经完成。。。");
-        return "FileSuccess";
-    }
-
-    @RequestMapping("/upload")
+    @RequestMapping(value = "/upload", produces = "text/html;charset=UTF-8", method = {RequestMethod.POST})
     @ResponseBody
     public String UploadById(HttpServletRequest request, @RequestParam("fid") int fid, @RequestParam("upload") MultipartFile upload, ModelMap modelmap) throws Exception
     {
@@ -146,7 +53,7 @@ public class ImageController
         {
             return objectMapper.writeValueAsString(Result.error("NotAllowed", 403));
         }
-        String path = (String) modelmap.get("userPath") + thisFolder.getPath();
+        String path = modelmap.get("userPath") + thisFolder.getPath();
         System.out.println(path);
         //如果文件重名，应该覆盖原文件吧（是否覆盖由前端决定）
         //选的是war exploded 那么文件会在工程目录下
@@ -167,8 +74,14 @@ public class ImageController
             thisImage.setName(filename);
             thisImage.setAlbum(thisFolder.getFolderName());
             thisImage.setVisited(1);//默认访问权限1，仅用户本人和管理员可见
-            thisImage.setUser((String) modelmap.get("username"));
-            thisImage.setPath(thisFolder.getPath());
+            thisImage.setUsername((String) modelmap.get("username"));
+            if (thisFolder.getFather() == 0)
+            {
+                thisImage.setPath("/");//图片在根目录中
+            } else
+            {
+                thisImage.setPath(thisFolder.getPath());
+            }
             thisImage.setUploadTime(LocalDateTime.now());
             thisImage.setSize(upload.getSize());
             thisImage.setFid(thisFolder.getFid());
@@ -216,7 +129,7 @@ public class ImageController
 
     }
 
-    @RequestMapping("/download")
+    @RequestMapping(value = "/download", produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String downloadFile(HttpServletResponse response, int imageid, ModelMap modelMap) throws Exception
     {
@@ -235,7 +148,7 @@ public class ImageController
             //获取页面输出流
             ServletOutputStream outputStream = response.getOutputStream();
             //读取文件
-            byte[] bytes = FileUtils.readFileToByteArray(new File(thisImage.getPath() + thisImage.getName()));
+            byte[] bytes = FileUtils.readFileToByteArray(new File(modelMap.get("userPath") + thisImage.getPath() + thisImage.getName()));
             //向输出流写文件
             //写之前设置响应流以附件的形式打开返回值,这样可以保证前边打开文件出错时异常可以返回给前台
             response.setHeader("Content-Disposition", "attachment;filename=" + thisImage.getName());
@@ -255,18 +168,14 @@ public class ImageController
     @ResponseBody
     public String deleteImage(int imageid, ModelMap modelMap) throws Exception
     {
-        if (modelMap.get("username") == null)
-        {
-            return objectMapper.writeValueAsString(Result.error("没登录", 401));
-        }
-        if (imageService.getImage(imageid).getName().equals((String) modelMap.get("username")))
-        {
-            return objectMapper.writeValueAsString(Result.error("没权限", 403));
-        }
         Image thisImage = imageService.getImage(imageid);
         if (thisImage == null)
         {
             return objectMapper.writeValueAsString(Result.error("不存在的文件", 404));
+        }
+        if (thisImage.getName().equals(modelMap.get("username")))
+        {
+            return objectMapper.writeValueAsString(Result.error("没权限", 403));
         }
         File file = new File(modelMap.get("userPath") + thisImage.getPath() + thisImage.getName());
         file.delete();
@@ -301,7 +210,7 @@ public class ImageController
         {
             return objectMapper.writeValueAsString(Result.error("图片不存在", 404));
         }
-        if (!thisImage.getUsername().equals((String) modelMap.get("username")))
+        if (!thisImage.getUsername().equals(modelMap.get("username")))
         {
             return objectMapper.writeValueAsString(Result.error("没有权限！", 403));
         }

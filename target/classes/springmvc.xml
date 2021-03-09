@@ -34,12 +34,16 @@
             <mvc:exclude-mapping path="/user/tologin"/>
             <mvc:exclude-mapping path="/test/**"/>
             <!--配置拦截器对象-->
-            <bean class="com.Jessie.OnlineAlbum.service.loginInterceptor"/>
+            <bean class="com.Jessie.OnlineAlbum.interceptor.loginInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/admin/**"/>
+            <bean class="com.Jessie.OnlineAlbum.interceptor.adminInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
     <!--配置文件解析器对象-->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="maxUploadSize" value="104857600" />
+        <property name="maxUploadSize" value="104857600"/>
 
     </bean>
     <!--开启SpringMvc框架注解支持，自动加载处理器映射器和适配器 因此我们只需要编写controller和视图解析器-->

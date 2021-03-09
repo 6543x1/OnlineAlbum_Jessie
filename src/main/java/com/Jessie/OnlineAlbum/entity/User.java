@@ -27,6 +27,7 @@ public class User implements Serializable
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", userfid=" + userfid +
+                ", mailAddress='" + mailAddress + '\'' +
                 '}';
     }
 

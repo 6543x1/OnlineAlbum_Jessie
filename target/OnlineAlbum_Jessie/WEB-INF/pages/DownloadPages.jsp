@@ -12,7 +12,8 @@
     <title>Title</title>
 </head>
 <body>
-<h1>下载列表</h1><hr>
+<h1>下载列表</h1>
+<hr>
 <c:forEach items="${ folderList }" var="folder">
     <h2>文件夹名：${folder.folderName }</h2><br>
     绝对路径：${folder.path }<br>

@@ -56,7 +56,7 @@ public class Result<T>
         if (msg == null) return;
         this.msg = msg;
         this.code = code;
-        status = true;
+        status = code == 200;
     }
 
     private Result(String msg, T data, boolean status)

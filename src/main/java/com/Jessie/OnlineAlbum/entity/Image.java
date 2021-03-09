@@ -34,7 +34,7 @@ public class Image implements Serializable
                 ", visited=" + visited +
                 ", album='" + album + '\'' +
                 ", path='" + path + '\'' +
-                ", UploadTime=" + uploadTime +
+                ", UploadTime=" + uploadTime.toString() +
                 ", size=" + size +
                 '}';
     }
@@ -93,18 +93,6 @@ public class Image implements Serializable
     {
         this.name = name;
     }
-
-    public String getUser()
-    {
-        return username;
-    }
-
-    public void setUser(String user)
-    {
-        this.username = user;
-    }
-
-
     public void setVisited(int visited)
     {
         this.visited = visited;

@@ -20,19 +20,19 @@
         <td><input type="button" value="上传" onclick="test()"></td>
     </tr>
 </table>
-<script >
-    function test(){
+<script>
+    function test() {
         var form = new FormData(document.getElementById("tf"));
         $.ajax({
-            url:"user/fileupload1",
-            type:"post",
-            data:form,
-            processData:false,
-            contentType:false,
-            success:function(data){
-                if(data=="1"){
+            url: "user/fileupload1",
+            type: "post",
+            data: form,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                if (data == "1") {
                     alert("上传成功")
-                }else {
+                } else {
                     alert("上传失败")
                 }
             }

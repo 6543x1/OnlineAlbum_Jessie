@@ -12,20 +12,20 @@
 </head>
 <body>
 <h3>当前登录用户:${ username }</h3>
-    <form id="tf" enctype="multipart/form-data">
-        <h3>上传到相应的相册中，不过只能查找用户根目录的相册，不存在会自动创建新相册</h3>
-        <table>
-            <tr>
-                <td>album<input type="text" name="album"></td>
-            </tr>
-            <tr>
+<form id="tf" enctype="multipart/form-data">
+    <h3>上传到相应的相册中，不过只能查找用户根目录的相册，不存在会自动创建新相册</h3>
+    <table>
+        <tr>
+            <td>album<input type="text" name="album"></td>
+        </tr>
+        <tr>
             <td>文件上传<input type="file" accept="image/*" name="upload"></td>
-            </tr>
-            <!--这里的name一定要和controller中对应方法参数名一样，否则会NullPointerException -->
+        </tr>
+        <!--这里的name一定要和controller中对应方法参数名一样，否则会NullPointerException -->
         <tr>
             <td><input type="button" value="上传" onclick="test()"></td>
         </tr>
-</table>
+    </table>
 </form>
 <br/>
 <form id="uploadById" enctype="multipart/form-data">
@@ -50,7 +50,7 @@
             <td>父文件夹fid<input type="text" name="father"></td>
         </tr>
         <tr>
-            <td>文件夹名字<input type="text"  name="foldName"></td>
+            <td>文件夹名字<input type="text" name="foldName"></td>
         </tr>
         <!--这里的name一定要和controller中对应方法参数名一样，否则会NullPointerException -->
         <tr>

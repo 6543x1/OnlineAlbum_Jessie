@@ -11,12 +11,12 @@
     <title>登入成功</title>
 </head>
 <body>
-    <h3>成功</h3>
-    <h3>当前用户</h3>
-    <br/>
-    <a href="${pageContext.request.contextPath}/user/testRedirect">返回首页</a>
-    ${ requestScope }
-    <br/>
+<h3>成功</h3>
+<h3>当前用户</h3>
+<br/>
+<a href="${pageContext.request.contextPath}/user/testRedirect">返回首页</a>
+${ requestScope }
+<br/>
 
 </body>
 </html>
