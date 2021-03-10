@@ -169,6 +169,7 @@ public class FolderController
         }
         Folder folder = folderService.getFolder(fid);
         folderService.delFolder(fid);
+        shareService.deleteShareByData(fid);
         //还要把所有子文件夹也干掉，但是有点复杂
         return objectMapper.writeValueAsString(Result.success("deleteSuccess"));
     }
@@ -190,9 +191,10 @@ public class FolderController
         imageService.shareImages(2, fid);
         Share share = new Share();
         share.setShareType(0);
-        share.setFid(fid);
+        share.setShareData(fid);
         share.setShareUser((String) modelMap.get("username"));
         share.setShareCode(mailServiceImpl.getRandomString());
+        shareService.newShare(share);
         return objectMapper.writeValueAsString(Result.success("shareFolderSuccess", share.getShareCode()));
     }
 }

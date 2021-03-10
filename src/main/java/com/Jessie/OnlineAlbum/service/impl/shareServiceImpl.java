@@ -39,8 +39,14 @@ public class shareServiceImpl implements ShareService
     }
 
     @Override
-    public Share checkShareExisted(int shareImageID)
+    public void deleteShareByData(int shareData)
     {
-        return shareDAO.checkShareExisted(shareImageID);
+        shareDAO.deleteShareByData(shareData);
+    }
+
+    @Override
+    public Share checkShareAvailable(int shareData)
+    {
+        return shareDAO.checkShareAvailable(shareData);
     }
 }

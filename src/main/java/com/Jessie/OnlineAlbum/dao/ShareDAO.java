@@ -17,13 +17,16 @@ public interface ShareDAO
     @Select("select * from share where shareUser=#{shareUser}")
     List<Share> getUserShare(String shareUser);
 
-    @Insert("insert into share (shareType,shareUser,shareCode,shareImageID,shareFid) values(#{shareType},#{shareUser},#{shareCode},#{ShareImageID},#{shareFid})")
+    @Insert("insert into share (shareType,shareUser,shareCode,shareData) values(#{shareType},#{shareUser},#{shareCode},#{shareData})")
     void newShare(Share share);
 
     @Delete("delete from share where shareCode=#{shareCode}")
     void deleteShare(String shareCode);
 
-    @Select("select * from share where shareImageID=#{shareImageID}")
-    Share checkShareExisted(int shareImageID);
+    @Delete("delete from share where shareData=#{shareData}")
+    void deleteShareByData(int shareData);
+
+    @Select("select * from share where shareData=#{shareData}")
+    Share checkShareAvailable(int shareData);
 
 }

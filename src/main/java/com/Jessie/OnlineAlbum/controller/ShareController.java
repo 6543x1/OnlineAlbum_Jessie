@@ -38,30 +38,31 @@ public class ShareController
     @Autowired
     private ShareService shareService;
 
-    @RequestMapping("/shareDownload/{imageid}")
+    @RequestMapping(value = "/download/{shareCode}/{imageid}", produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String shareDownload(@PathVariable int imageid, HttpServletRequest request, HttpServletResponse response) throws Exception
+    public String shareDownload(@PathVariable int imageid, @PathVariable String shareCode, HttpServletRequest request, HttpServletResponse response) throws Exception
     {
-        Share thisShare = shareService.checkShareExisted(imageid);
+        Share thisShare = shareService.getShare(shareCode);
         if (thisShare == null)
         {
             return objectMapper.writeValueAsString(Result.error("分享不存在", 404));
         }
-        if (thisShare.getShareType() != 0)
-        {
-            return objectMapper.writeValueAsString(Result.error("暂时无法下载文件夹", 400));
-        }
-
-        Image thisImage = imageService.getImage(thisShare.getImageid());
-        String userPath = folderService.getFolder(userService.findUser(thisShare.getShareUser()).getUserfid()).getPath();
+        Image thisImage = imageService.getImage(imageid);
         if (thisImage == null)
         {
             return objectMapper.writeValueAsString(Result.error("文件不存在", 404));
         }
-        if (thisImage.getVisited() != 1)
+        if (thisImage.getVisited() != 2)
         {
             return objectMapper.writeValueAsString(Result.error("作者可能取消了分享", 403));
         }
+
+        if (thisShare.getShareData() != imageid && thisImage.getFid() != thisShare.getShareData())
+        {
+            return objectMapper.writeValueAsString(Result.error("该文件不在分享列表中（暂时无法下载文件夹）", 400));
+        }
+        String userPath = folderService.getFolder(userService.findUser(thisShare.getShareUser()).getUserfid()).getPath();
+
         try
         {
             //获取页面输出流
@@ -83,7 +84,7 @@ public class ShareController
         return objectMapper.writeValueAsString(Result.success("开始下载"));
     }
 
-    @RequestMapping("/getShareInfo")
+    @RequestMapping(value = "/getShareInfo", produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String getUserShares(String shareCode) throws Exception
     {
@@ -95,10 +96,10 @@ public class ShareController
         List<Image> list;
         if (thisShare.getShareType() == 0)
         {
-            list = imageService.getUserImages(thisShare.getShareUser(), thisShare.getFid());
+            list = imageService.getUserImages(thisShare.getShareUser(), thisShare.getShareData());
         } else
         {
-            Image image = imageService.getImage(thisShare.getImageid());
+            Image image = imageService.getImage(thisShare.getShareData());
             list = new ArrayList<>();
             list.add(image);
         }

@@ -15,5 +15,7 @@ public interface ShareService
 
     void deleteShare(String shareCode);
 
-    Share checkShareExisted(int shareImageID);
+    void deleteShareByData(int shareData);//因为设置级联弄得两个表，所以就这样吧...
+
+    Share checkShareAvailable(int shareData);
 }

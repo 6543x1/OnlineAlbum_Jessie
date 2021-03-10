@@ -7,6 +7,7 @@ import com.Jessie.OnlineAlbum.entity.Result;
 import com.Jessie.OnlineAlbum.entity.Share;
 import com.Jessie.OnlineAlbum.service.FolderService;
 import com.Jessie.OnlineAlbum.service.ImageService;
+import com.Jessie.OnlineAlbum.service.ShareService;
 import com.Jessie.OnlineAlbum.service.impl.ImageServiceImpl;
 import com.Jessie.OnlineAlbum.service.impl.mailServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,6 +38,8 @@ public class ImageController
     private FolderService folderService;
     @Autowired
     private HashMap<String, Boolean> imageType;
+    @Autowired
+    private ShareService shareService;
 
     @RequestMapping("/testHash")
     @ResponseBody
@@ -201,6 +204,7 @@ public class ImageController
         File file = new File(modelMap.get("userPath") + thisImage.getPath() + thisImage.getName());
         file.delete();
         imageService.deleteImage(imageid);
+        shareService.deleteShareByData(imageid);
         //删除其在数据库中记录
         return objectMapper.writeValueAsString(Result.success("删除成功"));
     }
@@ -286,9 +290,10 @@ public class ImageController
         imageService.shareImage(2, imageid);
         Share share = new Share();
         share.setShareType(1);
-        share.setImageid(imageid);
+        share.setShareData(imageid);
         share.setShareUser((String) modelMap.get("username"));
         share.setShareCode(mailServiceImpl.getRandomString());
+        shareService.newShare(share);
         return objectMapper.writeValueAsString(Result.success("shareImageSuccess", share.getShareCode()));
     }
 }

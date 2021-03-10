@@ -7,8 +7,7 @@ public class Share implements Serializable
     int shareType;
     String shareUser;
     String shareCode;
-    int imageid;
-    int fid;
+    int shareData;
 
     @Override
     public String toString()
@@ -17,9 +16,18 @@ public class Share implements Serializable
                 "shareType=" + shareType +
                 ", shareUser='" + shareUser + '\'' +
                 ", shareCode='" + shareCode + '\'' +
-                ", imageid=" + imageid +
-                ", fid=" + fid +
+                ", shareData=" + shareData +
                 '}';
+    }
+
+    public int getShareData()
+    {
+        return shareData;
+    }
+
+    public void setShareData(int shareData)
+    {
+        this.shareData = shareData;
     }
 
     public int getShareType()
@@ -52,23 +60,5 @@ public class Share implements Serializable
         this.shareCode = shareCode;
     }
 
-    public int getImageid()
-    {
-        return imageid;
-    }
 
-    public void setImageid(int imageid)
-    {
-        this.imageid = imageid;
-    }
-
-    public int getFid()
-    {
-        return fid;
-    }
-
-    public void setFid(int fid)
-    {
-        this.fid = fid;
-    }
 }
