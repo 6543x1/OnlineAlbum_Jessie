@@ -1,0 +1,1270 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+    xmlns:o="urn:schemas-microsoft-com:office:office"
+    xmlns:w="urn:schemas-microsoft-com:office:word"
+    xmlns="http://www.w3.org/TR/REC-html40">
+    <head><meta http-equiv=Content-Type content="text/html; charset=utf-8">
+    <style type="text/css">
+        table  
+        {  
+            border-collapse: collapse;
+            border: none;  
+            width: 100%;  
+        }  
+        td,tr  
+        {  
+            border: solid #CCC 1px;
+            padding:3px;
+            font-size:9pt;
+        } 
+        .codestyle{
+            word-break: break-all;
+            mso-highlight:rgb(252, 252, 252);
+            padding-left: 5px; background-color: rgb(252, 252, 252); border: 1px solid rgb(225, 225, 232);
+        }
+        img {
+            width:100;
+        }
+    </style>
+    <meta name=ProgId content=Word.Document>
+    <meta name=Generator content="Microsoft Word 11">
+    <meta name=Originator content="Microsoft Word 11">
+    <xml><w:WordDocument><w:View>Print</w:View></xml></head>
+    <body><h1>1、返回的格式</h1><div style="margin-left:0px;"><h2>1.1、返回的格式</h2><div style="margin-left:0px;"><p>返回的数据是一个json字符串，有如下参数： </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>参数名字</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Code</td>
+<td>请求状态码</td>
+</tr>
+<tr>
+<td>Statues</td>
+<td>请求是否成功，bool类型</td>
+</tr>
+<tr>
+<td>msg</td>
+<td>返回成功或者失败的具体信息，比如修改成功，没有登录</td>
+</tr>
+<tr>
+<td>data</td>
+<td>根据不同场景data中的数据也不同</td>
+</tr>
+</tbody>
+</table></div><h2>1.2、全局状态码的含义</h2><div style="margin-left:0px;"><table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>返回的状态码</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>请求成功</td>
+</tr>
+<tr>
+<td>400</td>
+<td>请求发生了错误</td>
+</tr>
+<tr>
+<td>401</td>
+<td>没有登录或无法获取用户信息</td>
+</tr>
+<tr>
+<td>403</td>
+<td>权限不足，比如试图删除别人的图片</td>
+</tr>
+<tr>
+<td>404</td>
+<td>服务器没有找到相应的文件或是文件夹</td>
+</tr>
+<tr>
+<td>500</td>
+<td>服务器内部发生了一些错误，可能由请求参数有误引起</td>
+</tr>
+</tbody>
+</table></div></div><h1>2、分享操作</h1><div style="margin-left:0px;"><h2>2.1、分享一张图片</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/image/shareImage</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>请求参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">imageid</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>分享的图片的id</td>
+</tr>
+</tbody>
+</table>
+<h5>返回示例</h5>
+<table width='100%' class='codestyle'><pre><code>{"code":200,"status":true,"msg":"shareFolderSuccess","data":"9td8M9"}
+</code></pre></table>
+<h5>返回参数说明</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">code</td>
+<td style="text-align: left;">string</td>
+<td>无</td>
+</tr>
+<tr>
+<td style="text-align: left;">status</td>
+<td style="text-align: left;">string</td>
+<td>无</td>
+</tr>
+<tr>
+<td style="text-align: left;">msg</td>
+<td style="text-align: left;">string</td>
+<td>无</td>
+</tr>
+<tr>
+<td style="text-align: left;">data</td>
+<td style="text-align: left;">string</td>
+<td>成功返回分享码</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5></div><h2>2.2、分享一个文件夹下的全部图片</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>不包括子文件夹里的图片</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/folder/shareImage</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>请求参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">fid</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>要分享的文件夹的fid</td>
+</tr>
+</tbody>
+</table>
+<h5>返回示例</h5>
+<table width='100%' class='codestyle'><pre><code>{"code":200,"status":true,"msg":"shareFolderSuccess","data":"9td8M9"}
+</code></pre></table>
+<h5>返回参数说明</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">code</td>
+<td style="text-align: left;">string</td>
+<td>无</td>
+</tr>
+<tr>
+<td style="text-align: left;">status</td>
+<td style="text-align: left;">string</td>
+<td>无</td>
+</tr>
+<tr>
+<td style="text-align: left;">msg</td>
+<td style="text-align: left;">string</td>
+<td>无</td>
+</tr>
+<tr>
+<td style="text-align: left;">data</td>
+<td style="text-align: left;">string</td>
+<td>成功返回shareCode（唯一分享码）</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5></div><h2>2.3、获取分享的文件信息</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>可以获取单文件和多文件</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/share/getShareInfo</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>请求参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">shareCode</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>分享码，用户分享后获得</td>
+</tr>
+</tbody>
+</table>
+<h5>返回示例</h5>
+<table width='100%' class='codestyle'><pre><code>[{"imageid":12,"name":"QQ??20191108084050.jpg","username":"Jessie","visited":2,"album":"Default","path":"my/my03/","uploadTime":{"dayOfYear":46,"dayOfMonth":15,"hour":14,"minute":24,"monthValue":2,"nano":0,"second":34,"dayOfWeek":"MONDAY","month":"FEBRUARY","year":2021,"chronology":{"id":"ISO","calendarType":"iso8601"}},"size":102545,"fid":4},{"imageid":33,"name":"???031902410??????.jpg","username":"Jessie","visited":2,"album":"my03","path":"my/my03/","uploadTime":{"dayOfYear":61,"dayOfMonth":2,"hour":22,"minute":36,"monthValue":3,"nano":0,"second":30,"dayOfWeek":"TUESDAY","month":"MARCH","year":2021,"chronology":{"id":"ISO","calendarType":"iso8601"}},"size":124639,"fid":4}]
+</code></pre></table>
+<h5>备注</h5>
+<p>若为单文件分享，返回内容为单文件的信息
+多文件，则为多文件的信息
+样例一开始没有设置好导致中文乱码，现在已经修复，但是样例就懒得改了</p></div><h2>2.4、下载分享的文件</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>只能下单文件，使用pathVariable</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/share/download/{shareCode}/{imageid}</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>请求参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">shareCode</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>地址中</td>
+</tr>
+<tr>
+<td style="text-align: left;">imageid</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>地址中</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5>
+<p>若成功会直接开始下载</p></div></div><h1>3、文件夹操作</h1><div style="margin-left:0px;"><h2>3.1、获取当前文件夹下图片列表</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/folder/getCurrentImages</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>请求参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">fid</td>
+<td style="text-align: left;">是</td>
+<td>int</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+<h5>返回示例</h5>
+<table width='100%' class='codestyle'><pre><code>[
+  {
+    "imageid": 5,
+    "name": "d427b5b7d0a20cf4e0adcc7170094b36adaf9980.jpg",
+    "username": "Jessie",
+    "visited": 1,
+    "album": "my",
+    "path": "D:/TomcatImg/Jessie/my/",
+    "uploadTime": {
+      "dayOfMonth": 9,
+      "hour": 19,
+      "minute": 8,
+      "monthValue": 2,
+      "nano": 0,
+      "second": 28,
+      "dayOfWeek": "TUESDAY",
+      "month": "FEBRUARY",
+      "year": 2021,
+      "dayOfYear": 40,
+      "chronology": {
+        "id": "ISO",
+        "calendarType": "iso8601"
+      }
+    },
+    "size": 11319,
+    "fid": 2,
+  },
+  {
+    "imageid": 6,
+    "name": "zitiduizhaobiao-2.jpg",
+    "username": "Jessie",
+    "visited": 1,
+    "album": "my",
+    "path": "D:/TomcatImg/Jessie/my/",
+    "uploadTime": {
+      "dayOfMonth": 9,
+      "hour": 19,
+      "minute": 10,
+      "monthValue": 2,
+      "nano": 0,
+      "second": 9,
+      "dayOfWeek": "TUESDAY",
+      "month": "FEBRUARY",
+      "year": 2021,
+      "dayOfYear": 40,
+      "chronology": {
+        "id": "ISO",
+        "calendarType": "iso8601"
+      }
+    },
+    "size": 68088,
+    "fid": 2,
+  },
+  {
+    "imageid": 7,
+    "name": "ChMkJ1bKwxmIagc-AAaj5o2w6BgAALGxwPWFDYABqP-431.jpg",
+    "username": "Jessie",
+    "visited": 1,
+    "album": "my",
+    "path": "D:/TomcatImg/Jessie/my/",
+    "uploadTime": {
+      "dayOfMonth": 9,
+      "hour": 19,
+      "minute": 10,
+      "monthValue": 2,
+      "nano": 0,
+      "second": 53,
+      "dayOfWeek": "TUESDAY",
+      "month": "FEBRUARY",
+      "year": 2021,
+      "dayOfYear": 40,
+      "chronology": {
+        "id": "ISO",
+        "calendarType": "iso8601"
+      }
+    },
+    "size": 169608,
+    "fid": 2,
+  },
+  {
+    "imageid": 8,
+    "name": "QQ截图20200430140808.jpg",
+    "username": "Jessie",
+    "visited": 1,
+    "album": "Default",
+    "path": "D:/TomcatImg/Jessie/my/",
+    "uploadTime": {
+      "dayOfMonth": 9,
+      "hour": 20,
+      "minute": 26,
+      "monthValue": 2,
+      "nano": 0,
+      "second": 18,
+      "dayOfWeek": "TUESDAY",
+      "month": "FEBRUARY",
+      "year": 2021,
+      "dayOfYear": 40,
+      "chronology": {
+        "id": "ISO",
+        "calendarType": "iso8601"
+      }
+    },
+    "size": 94608,
+    "fid": 2,
+  },
+  {
+    "imageid": 9,
+    "name": "QQ截图20200408234102.jpg",
+    "username": "Jessie",
+    "visited": 1,
+    "album": "Default",
+    "path": "D:/TomcatImg/Jessie/my/",
+    "uploadTime": {
+      "dayOfMonth": 14,
+      "hour": 23,
+      "minute": 59,
+      "monthValue": 2,
+      "nano": 0,
+      "second": 21,
+      "dayOfWeek": "SUNDAY",
+      "month": "FEBRUARY",
+      "year": 2021,
+      "dayOfYear": 45,
+      "chronology": {
+        "id": "ISO",
+        "calendarType": "iso8601"
+      }
+    },
+    "size": 129357,
+    "fid": 2,
+  },
+  {
+    "imageid": 46,
+    "name": "TIM截图20190129162119.png",
+    "username": "Jessie",
+    "visited": 1,
+    "album": "my",
+    "path": "my/",
+    "uploadTime": {
+      "dayOfMonth": 9,
+      "hour": 0,
+      "minute": 13,
+      "monthValue": 3,
+      "nano": 0,
+      "second": 0,
+      "dayOfWeek": "TUESDAY",
+      "month": "MARCH",
+      "year": 2021,
+      "dayOfYear": 68,
+      "chronology": {
+        "id": "ISO",
+        "calendarType": "iso8601"
+      }
+    },
+    "size": 1102395,
+    "fid": 2,
+  }
+]
+</code></pre></table>
+<h5>返回参数说明</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">imageid</td>
+<td style="text-align: left;">string</td>
+<td>图片的唯一id</td>
+</tr>
+<tr>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">string</td>
+<td>无</td>
+</tr>
+<tr>
+<td style="text-align: left;">username</td>
+<td style="text-align: left;">string</td>
+<td>无</td>
+</tr>
+<tr>
+<td style="text-align: left;">visited</td>
+<td style="text-align: left;">string</td>
+<td>访问级别，0为管理员，1为用户自己</td>
+</tr>
+<tr>
+<td style="text-align: left;">album</td>
+<td style="text-align: left;">string</td>
+<td>所属相册</td>
+</tr>
+<tr>
+<td style="text-align: left;">path</td>
+<td style="text-align: left;">string</td>
+<td>相对路径（老图片还没改）</td>
+</tr>
+<tr>
+<td style="text-align: left;">uploadTime</td>
+<td style="text-align: left;">object</td>
+<td>上传时间，不知道为啥解析成这样了，前端表示不影响就不改了</td>
+</tr>
+<tr>
+<td style="text-align: left;">size</td>
+<td style="text-align: left;">string</td>
+<td>图片大小</td>
+</tr>
+<tr>
+<td style="text-align: left;">fid</td>
+<td style="text-align: left;">string</td>
+<td>图片所属文件夹的fid</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5>
+<p>返回的是List容器转成json</p></div><h2>3.2、新建文件夹</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/folder/CreateFolder</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>请求参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">father</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>无</td>
+</tr>
+<tr>
+<td style="text-align: left;">folderName</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5></div><h2>3.3、删除文件夹</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/folder/deleteFolder</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>请求参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">fid</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5>
+<p>子文件夹的信息仍然会残留在数据库中，因为我懒得写循环去删除了。正常情况下不会请求到被删除的文件夹，即使被意外请求到也不会返回数据，因为真实的数据已经被删除了。</p></div><h2>3.4、获取文件夹列表</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/folder/getCurrentFolders</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>请求参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">fid</td>
+<td style="text-align: left;">是</td>
+<td>int</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+<h5>返回示例</h5>
+<table width='100%' class='codestyle'><pre><code>[
+  {
+    "fid": -3,
+    "folderName": "返回上一级",
+    "path": "my/",
+    "father": 5,
+    "username": "Jessie",
+    "size": 393573
+  },
+  {
+    "fid": 3,
+    "folderName": "my02",
+    "path": "my/my02/",
+    "father": 2,
+    "username": "Jessie",
+    "size": 1699492
+  },
+  {
+    "fid": 4,
+    "folderName": "my03",
+    "path": "my/my03/",
+    "father": 2,
+    "username": "Jessie",
+    "size": 227184
+  }
+]
+</code></pre></table>
+<h5>返回参数说明</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">fid</td>
+<td style="text-align: left;">string</td>
+<td>文件夹的id</td>
+</tr>
+<tr>
+<td style="text-align: left;">folderName</td>
+<td style="text-align: left;">string</td>
+<td>文件夹名字</td>
+</tr>
+<tr>
+<td style="text-align: left;">path</td>
+<td style="text-align: left;">string</td>
+<td>相对路径</td>
+</tr>
+<tr>
+<td style="text-align: left;">father</td>
+<td style="text-align: left;">string</td>
+<td>其父文件夹</td>
+</tr>
+<tr>
+<td style="text-align: left;">username</td>
+<td style="text-align: left;">string</td>
+<td>所属的用户</td>
+</tr>
+<tr>
+<td style="text-align: left;">size</td>
+<td style="text-align: left;">string</td>
+<td>大小（没啥卵用）</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5>
+<p>返回的是List容器转成json</p></div></div><h1>4、图片的操作</h1><div style="margin-left:0px;"><h2>4.1、上传文件</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/image/upload</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>请求参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">fid</td>
+<td style="text-align: left;">是</td>
+<td>int</td>
+<td>无</td>
+</tr>
+<tr>
+<td style="text-align: left;">upload</td>
+<td style="text-align: left;">是</td>
+<td>file</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+<h5>返回示例</h5>
+<table width='100%' class='codestyle'><pre><code>{
+  "code": 200,
+  "status": true,
+  "msg": "uploadSuccess",
+  "data": null
+}
+</code></pre></table>
+<h5>返回参数说明</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">code</td>
+<td style="text-align: left;">string</td>
+<td>无</td>
+</tr>
+<tr>
+<td style="text-align: left;">status</td>
+<td style="text-align: left;">string</td>
+<td>无</td>
+</tr>
+<tr>
+<td style="text-align: left;">msg</td>
+<td style="text-align: left;">string</td>
+<td>无</td>
+</tr>
+<tr>
+<td style="text-align: left;">data</td>
+<td style="text-align: left;">object</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5></div><h2>4.2、删除一张图片</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/image/deleteImage</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>请求参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">imageid</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>图片唯一id</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5>
+<p>包括数据库和实际存储的信息都会被删除</p></div><h2>4.3、移动一张图片</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/image/moveImage</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>请求参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">imageid</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>图片唯一id</td>
+</tr>
+<tr>
+<td style="text-align: left;">destFid</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>目的文件夹的id</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5>
+<p>数据库和实际存储位置都会变动</p></div><h2>4.4、复制一张图片</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/image/copyImage</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>请求参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">imageid</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>图片唯一id</td>
+</tr>
+<tr>
+<td style="text-align: left;">destFid</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>目标文件夹的fid</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5>
+<p>实际存储位置也会多出来信息</p></div><h2>4.5、重命名一张图片</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/image/renameImage</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>请求参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">imageid</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>无</td>
+</tr>
+<tr>
+<td style="text-align: left;">newName</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>前端需要验证新名字是否符合命名规则</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5>
+<p>实际文件名字也会变动</p></div><h2>4.6、下载</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/image/download</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>请求参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">imageid</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+<h5>返回示例</h5>
+<table width='100%' class='codestyle'><pre><code>{
+  "code": 401,
+  "status": true,
+  "msg": "NotLogin,Interceptor",
+  "data": null
+}
+</code></pre></table>
+<h5>返回参数说明</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">code</td>
+<td style="text-align: left;">string</td>
+<td>错误代码</td>
+</tr>
+<tr>
+<td style="text-align: left;">status</td>
+<td style="text-align: left;">string</td>
+<td>无</td>
+</tr>
+<tr>
+<td style="text-align: left;">msg</td>
+<td style="text-align: left;">string</td>
+<td>无</td>
+</tr>
+<tr>
+<td style="text-align: left;">data</td>
+<td style="text-align: left;">object</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5>
+<p>如果下载成功response是文件下载信息，失败则返回错误信息</p></div></div><h1>5、账号操作</h1><div style="margin-left:0px;"><h2>5.1、登录</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>登录</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/user/login</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>请求参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">username</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>无</td>
+</tr>
+<tr>
+<td style="text-align: left;">password</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+<h5>返回示例</h5>
+<table width='100%' class='codestyle'><pre><code>{
+  "code": 200,
+  "status": true,
+  "msg": "loginSuccess",
+  "data": 5
+}
+</code></pre></table>
+<h5>返回参数说明</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">code</td>
+<td style="text-align: left;">string</td>
+<td>请求返回的状态码</td>
+</tr>
+<tr>
+<td style="text-align: left;">status</td>
+<td style="text-align: left;">string</td>
+<td>是否成功</td>
+</tr>
+<tr>
+<td style="text-align: left;">msg</td>
+<td style="text-align: left;">string</td>
+<td>返回的信息</td>
+</tr>
+<tr>
+<td style="text-align: left;">data</td>
+<td style="text-align: left;">string</td>
+<td>返回用户根目录文件夹id</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5>
+<p>返回的cookie用于后续的请求的身份识别</p></div><h2>5.2、设置邮箱</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/user/setMailAddr</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>请求参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">mailAddr</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5>
+<p>会发送六位验证码到用户邮箱中</p></div><h2>5.3、找回密码</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>没有参数</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/user/ResetPwByMail</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>备注</h5></div><h2>5.4、修改密码</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/user/ResetPw</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>请求参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">password</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>无</td>
+</tr>
+<tr>
+<td style="text-align: left;">newPassword</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5></div><h2>5.5、确认邮箱</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/user/confirmAddr</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>请求参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">mailCode</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>由用户在邮箱中查看</td>
+</tr>
+<tr>
+<td style="text-align: left;">newPassword</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>若为0为确认邮箱，否则为新密码</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5></div><h2>5.6、登出</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/user/loginOut</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>备注</h5></div><h2>5.7、注册</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/user/Register</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>请求参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">username</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>不能少于1位（前端实现）</td>
+</tr>
+<tr>
+<td style="text-align: left;">password</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>不能少于6位（前端实现）</td>
+</tr>
+</tbody>
+</table>
+<h5>返回示例</h5>
+<table width='100%' class='codestyle'><pre><code>{
+  "code": 200,
+  "status": false,
+  "msg": "NotLogin,Interceptor",
+  "data": null
+}
+</code></pre></table>
+<h5>返回参数说明</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">code</td>
+<td style="text-align: left;">string</td>
+<td>无</td>
+</tr>
+<tr>
+<td style="text-align: left;">status</td>
+<td style="text-align: left;">string</td>
+<td>无</td>
+</tr>
+<tr>
+<td style="text-align: left;">msg</td>
+<td style="text-align: left;">string</td>
+<td>无</td>
+</tr>
+<tr>
+<td style="text-align: left;">data</td>
+<td style="text-align: left;">object</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5>
+<p>注册只需要用户名和密码，邮箱可以稍后设置。密码在数据库中是MD5加密的</p></div></div></body></html>
