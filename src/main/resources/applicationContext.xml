@@ -67,6 +67,9 @@
                 <entry key="png" value="true"/>
                 <entry key="gif" value="true"/>
                 <entry key="bmp" value="true"/>
+                <entry key="ico" value="true"/>
+                <entry key="heic" value="true"/>
+                <!-- heic是新的图片格式，已经在IOS11之后使用，以及在大多数安卓机上支持（虽然默认还是jpg） -->
             </map>
         </constructor-arg>
     </bean>

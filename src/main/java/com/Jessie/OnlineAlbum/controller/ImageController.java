@@ -1,11 +1,14 @@
 package com.Jessie.OnlineAlbum.controller;
 
+import com.Jessie.OnlineAlbum.Exception.WrongTypeException;
 import com.Jessie.OnlineAlbum.entity.Folder;
 import com.Jessie.OnlineAlbum.entity.Image;
 import com.Jessie.OnlineAlbum.entity.Result;
+import com.Jessie.OnlineAlbum.entity.Share;
 import com.Jessie.OnlineAlbum.service.FolderService;
 import com.Jessie.OnlineAlbum.service.ImageService;
 import com.Jessie.OnlineAlbum.service.impl.ImageServiceImpl;
+import com.Jessie.OnlineAlbum.service.impl.mailServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 
 @Controller
 @RequestMapping("/image")
@@ -26,11 +30,21 @@ import java.time.LocalDateTime;
 public class ImageController
 {
     @Autowired
-    ObjectMapper objectMapper = new ObjectMapper();
+    ObjectMapper objectMapper;
     @Autowired
     private ImageService imageService;
     @Autowired
     private FolderService folderService;
+    @Autowired
+    private HashMap<String, Boolean> imageType;
+
+    @RequestMapping("/testHash")
+    @ResponseBody
+    public String hashTest() throws Exception
+    {
+        System.out.println(imageType.toString());
+        return objectMapper.writeValueAsString(imageType);
+    }
 
     @RequestMapping(value = "/upload", produces = "text/html;charset=UTF-8", method = {RequestMethod.POST})
     @ResponseBody
@@ -42,7 +56,6 @@ public class ImageController
             return "请先登入";
         }
         System.out.println("通过fid文件上传开始...");
-        String album = "DefaultName";
         String username = (String) modelmap.get("username");
         Folder thisFolder = folderService.getFolder(fid);
         if (thisFolder == null)
@@ -66,9 +79,10 @@ public class ImageController
         try
         {
             String filename = upload.getOriginalFilename();
-            if (filename == null)
+            String suffix = filename.substring(filename.lastIndexOf(".") + 1);
+            if (!imageType.containsKey(suffix))
             {
-                return objectMapper.writeValueAsString(Result.error("找不到原始文件名", 404));
+                throw new WrongTypeException();
             }
             Image thisImage = new Image();
             thisImage.setName(filename);
@@ -95,6 +109,13 @@ public class ImageController
             upload.transferTo(new File(path, thisImage.getName()));
             System.out.println("文件保存成功，开始向数据库中更新文件夹数据");
             folderService.updateSize(thisFolder.getSize() + thisImage.getSize(), thisFolder.getFid());
+        } catch (WrongTypeException e)
+        {
+            return objectMapper.writeValueAsString(Result.error("文件类型不对"));
+        } catch (NullPointerException e)
+        {
+            e.printStackTrace();
+            return objectMapper.writeValueAsString(Result.error("找不到文件的名字"));
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -139,7 +160,7 @@ public class ImageController
         {
             return objectMapper.writeValueAsString(Result.error("文件不存在", 404));
         }
-        if (!thisImage.getUsername().equals(username) || thisImage.getVisited() != 1)
+        if (!thisImage.getUsername().equals(username) || thisImage.getVisited() == 0)
         {
             return objectMapper.writeValueAsString(Result.error("你没有权限", 403));
         }
@@ -233,7 +254,6 @@ public class ImageController
     public String moveImage(int imageid, int destFid, ModelMap modelMap) throws Exception
     {
         Image thisImage = imageService.getImage(imageid);
-        System.out.println(thisImage.toString());
         if (thisImage == null)
         {
             return objectMapper.writeValueAsString(Result.error("图片不存在", 404));
@@ -249,4 +269,26 @@ public class ImageController
         return objectMapper.writeValueAsString(Result.success("移动成功"));
     }
 
+    @RequestMapping(value = "/shareImage", produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String shareImage(int imageid, ModelMap modelMap) throws Exception
+    {
+        if (modelMap.get("username") == null)
+        {
+            return objectMapper.writeValueAsString(Result.error("NotLogin", 401));
+        }
+        Image image = imageService.getImage(imageid);
+        if (image == null) return objectMapper.writeValueAsString(Result.error("NotExisted", 404));
+        if (!(modelMap.get("username")).equals(image.getUsername()))
+        {
+            return objectMapper.writeValueAsString(Result.error("NotAllowed", 403));
+        }
+        imageService.shareImage(2, imageid);
+        Share share = new Share();
+        share.setShareType(1);
+        share.setImageid(imageid);
+        share.setShareUser((String) modelMap.get("username"));
+        share.setShareCode(mailServiceImpl.getRandomString());
+        return objectMapper.writeValueAsString(Result.success("shareImageSuccess", share.getShareCode()));
+    }
 }

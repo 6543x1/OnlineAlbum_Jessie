@@ -59,6 +59,18 @@ public class ImageServiceImpl implements ImageService
         return ImageDAO.moveImage(imageid, newPath, newAlbum, fid);
     }
 
+    @Override
+    public void shareImages(int visited, int fid)
+    {
+        ImageDAO.shareImages(visited, fid);
+    }
+
+    @Override
+    public void shareImage(int visited, int imageid)
+    {
+        ImageDAO.shareImages(visited, imageid);
+    }
+
     public static boolean renameImage(Image image, String newName)
     {
         File file = new File(image.getPath() + image.getName());

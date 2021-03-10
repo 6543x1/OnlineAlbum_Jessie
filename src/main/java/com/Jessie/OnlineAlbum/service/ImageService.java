@@ -19,4 +19,8 @@ public interface ImageService
     int renameImage(int imageid, String newName);
 
     int moveImage(int imageid, String newPath, String newAlbum, int fid);
+
+    void shareImages(int visited, int fid);
+
+    void shareImage(int visited, int imageid);
 }
