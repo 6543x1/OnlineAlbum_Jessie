@@ -58,8 +58,8 @@ VALUES (0, 'root', 'D:/TomcatImg/', -1, 'Jessie', 0),
        (9, 'Alpha', 'D:/TomcatImg/Alpha/', 0, 'Alpha', 0),
        (10, '2021215', 'D:/TomcatImg/2021215/', 0, '2021215', 0),
        (11, '2021214', 'D:/TomcatImg/2021214/', 0, '2021214', 0),
-       (12, '2021', 'D:/TomcatImg/2021215/2021/', 10, '2021215', 7050),
-       (13, '1406', 'D:/TomcatImg/2021215/1406/', 10, '2021215', 97116),
+       (12, '2021', '2021/', 10, '2021215', 7050),
+       (13, '1406', '1406/', 10, '2021215', 97116),
        (14, 'aaa', 'D:/TomcatImg/aaa/', 0, 'aaa', 0),
        (15, 'a', 'D:/TomcatImg/a/', 0, 'a', 0),
        (16, 'zhou', 'D:/TomcatImg/zhou/', 0, 'zhou', 1630586),
@@ -224,4 +224,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION = @OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES = @OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-10 22:10:06
+-- Dump completed on 2021-03-10 22:18:13
