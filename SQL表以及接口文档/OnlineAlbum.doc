@@ -86,13 +86,89 @@
 <td>服务器内部发生了一些错误，可能由请求参数有误引起</td>
 </tr>
 </tbody>
-</table></div></div><h1>2、分享操作</h1><div style="margin-left:0px;"><h2>2.1、分享一张图片</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+</table></div></div><h1>2、账号操作</h1><div style="margin-left:0px;"><h2>2.1、登录</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>登录</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/user/login</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>请求参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">username</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>无</td>
+</tr>
+<tr>
+<td style="text-align: left;">password</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+<h5>返回示例</h5>
+<table width='100%' class='codestyle'><pre><code>{
+  "code": 200,
+  "status": true,
+  "msg": "loginSuccess",
+  "data": 5
+}
+</code></pre></table>
+<h5>返回参数说明</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">code</td>
+<td style="text-align: left;">string</td>
+<td>请求返回的状态码</td>
+</tr>
+<tr>
+<td style="text-align: left;">status</td>
+<td style="text-align: left;">string</td>
+<td>是否成功</td>
+</tr>
+<tr>
+<td style="text-align: left;">msg</td>
+<td style="text-align: left;">string</td>
+<td>返回的信息</td>
+</tr>
+<tr>
+<td style="text-align: left;">data</td>
+<td style="text-align: left;">string</td>
+<td>返回用户根目录文件夹id</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5>
+<p>返回的cookie用于后续的请求的身份识别</p></div><h2>2.2、设置邮箱</h2><div style="margin-left:0px;"><h5>简要描述</h5>
 <ul>
 <li>无</li>
 </ul>
 <h5>请求URL</h5>
 <ul>
-<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/image/shareImage</code></li>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/user/setMailAddr</code></li>
 </ul>
 <h5>请求方式</h5>
 <ul>
@@ -109,15 +185,153 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">imageid</td>
+<td style="text-align: left;">mailAddr</td>
 <td style="text-align: left;">是</td>
 <td>string</td>
-<td>分享的图片的id</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5>
+<p>会发送六位验证码到用户邮箱中</p></div><h2>2.3、找回密码</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>没有参数</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/user/ResetPwByMail</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>备注</h5></div><h2>2.4、修改密码</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/user/ResetPw</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>请求参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">password</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>无</td>
+</tr>
+<tr>
+<td style="text-align: left;">newPassword</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5></div><h2>2.5、确认邮箱</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/user/confirmAddr</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>请求参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">mailCode</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>由用户在邮箱中查看</td>
+</tr>
+<tr>
+<td style="text-align: left;">newPassword</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>若为0为确认邮箱，否则为新密码</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5></div><h2>2.6、登出</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/user/loginOut</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>备注</h5></div><h2>2.7、注册</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>无</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/user/Register</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>请求参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">username</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>不能少于1位（前端实现）</td>
+</tr>
+<tr>
+<td style="text-align: left;">password</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>不能少于6位（前端实现）</td>
 </tr>
 </tbody>
 </table>
 <h5>返回示例</h5>
-<table width='100%' class='codestyle'><pre><code>{"code":200,"status":true,"msg":"shareFolderSuccess","data":"9td8M9"}
+<table width='100%' class='codestyle'><pre><code>{
+  "code": 200,
+  "status": false,
+  "msg": "NotLogin,Interceptor",
+  "data": null
+}
 </code></pre></table>
 <h5>返回参数说明</h5>
 <table>
@@ -145,149 +359,13 @@
 </tr>
 <tr>
 <td style="text-align: left;">data</td>
-<td style="text-align: left;">string</td>
-<td>成功返回分享码</td>
-</tr>
-</tbody>
-</table>
-<h5>备注</h5></div><h2>2.2、分享一个文件夹下的全部图片</h2><div style="margin-left:0px;"><h5>简要描述</h5>
-<ul>
-<li>不包括子文件夹里的图片</li>
-</ul>
-<h5>请求URL</h5>
-<ul>
-<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/folder/shareImage</code></li>
-</ul>
-<h5>请求方式</h5>
-<ul>
-<li>post</li>
-</ul>
-<h5>请求参数</h5>
-<table>
-<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
-<th style="text-align: left;">参数名</th>
-<th style="text-align: left;">必选</th>
-<th>类型</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">fid</td>
-<td style="text-align: left;">是</td>
-<td>string</td>
-<td>要分享的文件夹的fid</td>
-</tr>
-</tbody>
-</table>
-<h5>返回示例</h5>
-<table width='100%' class='codestyle'><pre><code>{"code":200,"status":true,"msg":"shareFolderSuccess","data":"9td8M9"}
-</code></pre></table>
-<h5>返回参数说明</h5>
-<table>
-<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
-<th style="text-align: left;">参数名</th>
-<th style="text-align: left;">类型</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">code</td>
-<td style="text-align: left;">string</td>
+<td style="text-align: left;">object</td>
 <td>无</td>
-</tr>
-<tr>
-<td style="text-align: left;">status</td>
-<td style="text-align: left;">string</td>
-<td>无</td>
-</tr>
-<tr>
-<td style="text-align: left;">msg</td>
-<td style="text-align: left;">string</td>
-<td>无</td>
-</tr>
-<tr>
-<td style="text-align: left;">data</td>
-<td style="text-align: left;">string</td>
-<td>成功返回shareCode（唯一分享码）</td>
-</tr>
-</tbody>
-</table>
-<h5>备注</h5></div><h2>2.3、获取分享的文件信息</h2><div style="margin-left:0px;"><h5>简要描述</h5>
-<ul>
-<li>可以获取单文件和多文件</li>
-</ul>
-<h5>请求URL</h5>
-<ul>
-<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/share/getShareInfo</code></li>
-</ul>
-<h5>请求方式</h5>
-<ul>
-<li>post</li>
-</ul>
-<h5>请求参数</h5>
-<table>
-<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
-<th style="text-align: left;">参数名</th>
-<th style="text-align: left;">必选</th>
-<th>类型</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">shareCode</td>
-<td style="text-align: left;">是</td>
-<td>string</td>
-<td>分享码，用户分享后获得</td>
-</tr>
-</tbody>
-</table>
-<h5>返回示例</h5>
-<table width='100%' class='codestyle'><pre><code>[{"imageid":12,"name":"QQ??20191108084050.jpg","username":"Jessie","visited":2,"album":"Default","path":"my/my03/","uploadTime":{"dayOfYear":46,"dayOfMonth":15,"hour":14,"minute":24,"monthValue":2,"nano":0,"second":34,"dayOfWeek":"MONDAY","month":"FEBRUARY","year":2021,"chronology":{"id":"ISO","calendarType":"iso8601"}},"size":102545,"fid":4},{"imageid":33,"name":"???031902410??????.jpg","username":"Jessie","visited":2,"album":"my03","path":"my/my03/","uploadTime":{"dayOfYear":61,"dayOfMonth":2,"hour":22,"minute":36,"monthValue":3,"nano":0,"second":30,"dayOfWeek":"TUESDAY","month":"MARCH","year":2021,"chronology":{"id":"ISO","calendarType":"iso8601"}},"size":124639,"fid":4}]
-</code></pre></table>
-<h5>备注</h5>
-<p>若为单文件分享，返回内容为单文件的信息
-多文件，则为多文件的信息
-样例一开始没有设置好导致中文乱码，现在已经修复，但是样例就懒得改了</p></div><h2>2.4、下载分享的文件</h2><div style="margin-left:0px;"><h5>简要描述</h5>
-<ul>
-<li>只能下单文件，使用pathVariable</li>
-</ul>
-<h5>请求URL</h5>
-<ul>
-<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/share/download/{shareCode}/{imageid}</code></li>
-</ul>
-<h5>请求方式</h5>
-<ul>
-<li>post</li>
-</ul>
-<h5>请求参数</h5>
-<table>
-<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
-<th style="text-align: left;">参数名</th>
-<th style="text-align: left;">必选</th>
-<th>类型</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">shareCode</td>
-<td style="text-align: left;">是</td>
-<td>string</td>
-<td>地址中</td>
-</tr>
-<tr>
-<td style="text-align: left;">imageid</td>
-<td style="text-align: left;">是</td>
-<td>string</td>
-<td>地址中</td>
 </tr>
 </tbody>
 </table>
 <h5>备注</h5>
-<p>若成功会直接开始下载</p></div></div><h1>3、文件夹操作</h1><div style="margin-left:0px;"><h2>3.1、获取当前文件夹下图片列表</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<p>注册只需要用户名和密码，邮箱可以稍后设置。密码在数据库中是MD5加密的</p></div></div><h1>3、文件夹操作</h1><div style="margin-left:0px;"><h2>3.1、获取当前文件夹下图片列表</h2><div style="margin-left:0px;"><h5>简要描述</h5>
 <ul>
 <li>无</li>
 </ul>
@@ -988,13 +1066,13 @@
 </tbody>
 </table>
 <h5>备注</h5>
-<p>如果下载成功response是文件下载信息，失败则返回错误信息</p></div></div><h1>5、账号操作</h1><div style="margin-left:0px;"><h2>5.1、登录</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<p>如果下载成功response是文件下载信息，失败则返回错误信息</p></div></div><h1>5、分享操作</h1><div style="margin-left:0px;"><h2>5.1、分享一张图片</h2><div style="margin-left:0px;"><h5>简要描述</h5>
 <ul>
-<li>登录</li>
+<li>无</li>
 </ul>
 <h5>请求URL</h5>
 <ul>
-<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/user/login</code></li>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/image/shareImage</code></li>
 </ul>
 <h5>请求方式</h5>
 <ul>
@@ -1011,229 +1089,15 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">username</td>
+<td style="text-align: left;">imageid</td>
 <td style="text-align: left;">是</td>
 <td>string</td>
-<td>无</td>
-</tr>
-<tr>
-<td style="text-align: left;">password</td>
-<td style="text-align: left;">是</td>
-<td>string</td>
-<td>无</td>
+<td>分享的图片的id</td>
 </tr>
 </tbody>
 </table>
 <h5>返回示例</h5>
-<table width='100%' class='codestyle'><pre><code>{
-  "code": 200,
-  "status": true,
-  "msg": "loginSuccess",
-  "data": 5
-}
-</code></pre></table>
-<h5>返回参数说明</h5>
-<table>
-<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
-<th style="text-align: left;">参数名</th>
-<th style="text-align: left;">类型</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">code</td>
-<td style="text-align: left;">string</td>
-<td>请求返回的状态码</td>
-</tr>
-<tr>
-<td style="text-align: left;">status</td>
-<td style="text-align: left;">string</td>
-<td>是否成功</td>
-</tr>
-<tr>
-<td style="text-align: left;">msg</td>
-<td style="text-align: left;">string</td>
-<td>返回的信息</td>
-</tr>
-<tr>
-<td style="text-align: left;">data</td>
-<td style="text-align: left;">string</td>
-<td>返回用户根目录文件夹id</td>
-</tr>
-</tbody>
-</table>
-<h5>备注</h5>
-<p>返回的cookie用于后续的请求的身份识别</p></div><h2>5.2、设置邮箱</h2><div style="margin-left:0px;"><h5>简要描述</h5>
-<ul>
-<li>无</li>
-</ul>
-<h5>请求URL</h5>
-<ul>
-<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/user/setMailAddr</code></li>
-</ul>
-<h5>请求方式</h5>
-<ul>
-<li>post</li>
-</ul>
-<h5>请求参数</h5>
-<table>
-<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
-<th style="text-align: left;">参数名</th>
-<th style="text-align: left;">必选</th>
-<th>类型</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">mailAddr</td>
-<td style="text-align: left;">是</td>
-<td>string</td>
-<td>无</td>
-</tr>
-</tbody>
-</table>
-<h5>备注</h5>
-<p>会发送六位验证码到用户邮箱中</p></div><h2>5.3、找回密码</h2><div style="margin-left:0px;"><h5>简要描述</h5>
-<ul>
-<li>没有参数</li>
-</ul>
-<h5>请求URL</h5>
-<ul>
-<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/user/ResetPwByMail</code></li>
-</ul>
-<h5>请求方式</h5>
-<ul>
-<li>post</li>
-</ul>
-<h5>备注</h5></div><h2>5.4、修改密码</h2><div style="margin-left:0px;"><h5>简要描述</h5>
-<ul>
-<li>无</li>
-</ul>
-<h5>请求URL</h5>
-<ul>
-<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/user/ResetPw</code></li>
-</ul>
-<h5>请求方式</h5>
-<ul>
-<li>post</li>
-</ul>
-<h5>请求参数</h5>
-<table>
-<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
-<th style="text-align: left;">参数名</th>
-<th style="text-align: left;">必选</th>
-<th>类型</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">password</td>
-<td style="text-align: left;">是</td>
-<td>string</td>
-<td>无</td>
-</tr>
-<tr>
-<td style="text-align: left;">newPassword</td>
-<td style="text-align: left;">是</td>
-<td>string</td>
-<td>无</td>
-</tr>
-</tbody>
-</table>
-<h5>备注</h5></div><h2>5.5、确认邮箱</h2><div style="margin-left:0px;"><h5>简要描述</h5>
-<ul>
-<li>无</li>
-</ul>
-<h5>请求URL</h5>
-<ul>
-<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/user/confirmAddr</code></li>
-</ul>
-<h5>请求方式</h5>
-<ul>
-<li>post</li>
-</ul>
-<h5>请求参数</h5>
-<table>
-<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
-<th style="text-align: left;">参数名</th>
-<th style="text-align: left;">必选</th>
-<th>类型</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">mailCode</td>
-<td style="text-align: left;">是</td>
-<td>string</td>
-<td>由用户在邮箱中查看</td>
-</tr>
-<tr>
-<td style="text-align: left;">newPassword</td>
-<td style="text-align: left;">是</td>
-<td>string</td>
-<td>若为0为确认邮箱，否则为新密码</td>
-</tr>
-</tbody>
-</table>
-<h5>备注</h5></div><h2>5.6、登出</h2><div style="margin-left:0px;"><h5>简要描述</h5>
-<ul>
-<li>无</li>
-</ul>
-<h5>请求URL</h5>
-<ul>
-<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/user/loginOut</code></li>
-</ul>
-<h5>请求方式</h5>
-<ul>
-<li>post</li>
-</ul>
-<h5>备注</h5></div><h2>5.7、注册</h2><div style="margin-left:0px;"><h5>简要描述</h5>
-<ul>
-<li>无</li>
-</ul>
-<h5>请求URL</h5>
-<ul>
-<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/user/Register</code></li>
-</ul>
-<h5>请求方式</h5>
-<ul>
-<li>post</li>
-</ul>
-<h5>请求参数</h5>
-<table>
-<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
-<th style="text-align: left;">参数名</th>
-<th style="text-align: left;">必选</th>
-<th>类型</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">username</td>
-<td style="text-align: left;">是</td>
-<td>string</td>
-<td>不能少于1位（前端实现）</td>
-</tr>
-<tr>
-<td style="text-align: left;">password</td>
-<td style="text-align: left;">是</td>
-<td>string</td>
-<td>不能少于6位（前端实现）</td>
-</tr>
-</tbody>
-</table>
-<h5>返回示例</h5>
-<table width='100%' class='codestyle'><pre><code>{
-  "code": 200,
-  "status": false,
-  "msg": "NotLogin,Interceptor",
-  "data": null
-}
+<table width='100%' class='codestyle'><pre><code>{"code":200,"status":true,"msg":"shareFolderSuccess","data":"9td8M9"}
 </code></pre></table>
 <h5>返回参数说明</h5>
 <table>
@@ -1261,10 +1125,146 @@
 </tr>
 <tr>
 <td style="text-align: left;">data</td>
-<td style="text-align: left;">object</td>
+<td style="text-align: left;">string</td>
+<td>成功返回分享码</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5></div><h2>5.2、分享一个文件夹下的全部图片</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>不包括子文件夹里的图片</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/folder/shareImage</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>请求参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">fid</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>要分享的文件夹的fid</td>
+</tr>
+</tbody>
+</table>
+<h5>返回示例</h5>
+<table width='100%' class='codestyle'><pre><code>{"code":200,"status":true,"msg":"shareFolderSuccess","data":"9td8M9"}
+</code></pre></table>
+<h5>返回参数说明</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">code</td>
+<td style="text-align: left;">string</td>
 <td>无</td>
+</tr>
+<tr>
+<td style="text-align: left;">status</td>
+<td style="text-align: left;">string</td>
+<td>无</td>
+</tr>
+<tr>
+<td style="text-align: left;">msg</td>
+<td style="text-align: left;">string</td>
+<td>无</td>
+</tr>
+<tr>
+<td style="text-align: left;">data</td>
+<td style="text-align: left;">string</td>
+<td>成功返回shareCode（唯一分享码）</td>
+</tr>
+</tbody>
+</table>
+<h5>备注</h5></div><h2>5.3、获取分享的文件信息</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>可以获取单文件和多文件</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/share/getShareInfo</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>请求参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">shareCode</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>分享码，用户分享后获得</td>
+</tr>
+</tbody>
+</table>
+<h5>返回示例</h5>
+<table width='100%' class='codestyle'><pre><code>[{"imageid":12,"name":"QQ??20191108084050.jpg","username":"Jessie","visited":2,"album":"Default","path":"my/my03/","uploadTime":{"dayOfYear":46,"dayOfMonth":15,"hour":14,"minute":24,"monthValue":2,"nano":0,"second":34,"dayOfWeek":"MONDAY","month":"FEBRUARY","year":2021,"chronology":{"id":"ISO","calendarType":"iso8601"}},"size":102545,"fid":4},{"imageid":33,"name":"???031902410??????.jpg","username":"Jessie","visited":2,"album":"my03","path":"my/my03/","uploadTime":{"dayOfYear":61,"dayOfMonth":2,"hour":22,"minute":36,"monthValue":3,"nano":0,"second":30,"dayOfWeek":"TUESDAY","month":"MARCH","year":2021,"chronology":{"id":"ISO","calendarType":"iso8601"}},"size":124639,"fid":4}]
+</code></pre></table>
+<h5>备注</h5>
+<p>若为单文件分享，返回内容为单文件的信息
+多文件，则为多文件的信息
+样例一开始没有设置好导致中文乱码，现在已经修复，但是样例就懒得改了</p></div><h2>5.4、下载分享的文件</h2><div style="margin-left:0px;"><h5>简要描述</h5>
+<ul>
+<li>只能下单文件，使用pathVariable</li>
+</ul>
+<h5>请求URL</h5>
+<ul>
+<li><code>http://37x366u444.wicp.vip/OnlineAlbum_Jessie_war/share/download/{shareCode}/{imageid}</code></li>
+</ul>
+<h5>请求方式</h5>
+<ul>
+<li>post</li>
+</ul>
+<h5>请求参数</h5>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">shareCode</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>地址中</td>
+</tr>
+<tr>
+<td style="text-align: left;">imageid</td>
+<td style="text-align: left;">是</td>
+<td>string</td>
+<td>地址中</td>
 </tr>
 </tbody>
 </table>
 <h5>备注</h5>
-<p>注册只需要用户名和密码，邮箱可以稍后设置。密码在数据库中是MD5加密的</p></div></div></body></html>
+<p>若成功会直接开始下载</p></div></div></body></html>
